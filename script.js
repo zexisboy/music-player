@@ -1,12 +1,22 @@
 const player = document.getElementById('player');
 const muteButton = document.getElementById('muteButton');
 
-// Playlist with full GitHub URLs for rerouting audio
+// Playlist with all 14 songs using GitHub Pages URLs
 const playlist = [
   'https://zexisboy.github.io/music-player/audio/duvet.mp3',
+  'https://zexisboy.github.io/music-player/audio/eyes.mp3',
+  'https://zexisboy.github.io/music-player/audio/feelit.mp3',
+  'https://zexisboy.github.io/music-player/audio/flash.mp3',
   'https://zexisboy.github.io/music-player/audio/friday.mp3',
+  'https://zexisboy.github.io/music-player/audio/ghost.mp3',
+  'https://zexisboy.github.io/music-player/audio/god.mp3',
+  'https://zexisboy.github.io/music-player/audio/hero.mp3',
+  'https://zexisboy.github.io/music-player/audio/hq.mp3',
   'https://zexisboy.github.io/music-player/audio/japan.mp3',
-  'https://zexisboy.github.io/music-player/audio/nitrous.mp3'
+  'https://zexisboy.github.io/music-player/audio/nitrous.mp3',
+  'https://zexisboy.github.io/music-player/audio/pablo.mp3',
+  'https://zexisboy.github.io/music-player/audio/stars.mp3',
+  'https://zexisboy.github.io/music-player/audio/wonder.mp3'
 ];
 
 // Shuffle function (Fisher-Yates)
@@ -18,7 +28,7 @@ function shuffle(array) {
   return array;
 }
 
-// Initialize playlist with shuffle
+// Initialize playlist
 let currentTrackIndex = 0;
 let shuffledPlaylist = shuffle([...playlist]);
 
@@ -26,7 +36,7 @@ let shuffledPlaylist = shuffle([...playlist]);
 function loadAndPlayTrack() {
   player.src = shuffledPlaylist[currentTrackIndex];
   player.play().catch(() => {
-    // Handle autoplay block by changing button to require click
+    // Autoplay blocked, wait for user interaction
     muteButton.textContent = 'Start Music';
     muteButton.onclick = () => {
       player.play();
@@ -37,11 +47,11 @@ function loadAndPlayTrack() {
   });
 }
 
-// Endless loop: Move to next track, reshuffle if end reached
+// Move to next track (endless loop)
 function nextTrack() {
   currentTrackIndex++;
   if (currentTrackIndex >= shuffledPlaylist.length) {
-    shuffledPlaylist = shuffle([...playlist]); // Reshuffle for endless variety
+    shuffledPlaylist = shuffle([...playlist]); // Reshuffle when done
     currentTrackIndex = 0;
   }
   loadAndPlayTrack();
@@ -57,6 +67,6 @@ function toggleMute() {
 player.onended = nextTrack;
 muteButton.onclick = toggleMute;
 
-// Start muted to avoid autoplay issues
+// Start muted to comply with autoplay policies
 player.muted = true;
 loadAndPlayTrack();
